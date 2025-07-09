@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+
+@theme {
+  --color-my-A: oklch(0.32 0.04 153.3);
+  --color-my-B: oklch(0.38 0.05 146.9);
+  --color-my-C: oklch(0.53 0.07 141.4);
+  --color-my-D: oklch(0.74 0.06 116.8);
+  --color-my-E: oklch(0.89 0.02 96.6);
+}
