@@ -1,7 +1,10 @@
 import { NavLink } from 'react-router'
 import { useState } from 'react'
 
+
+
 const Header = () => {
+
     const [isOpen, setIsOpen] = useState(false);
     const style = "font-bold text-my-D underline"
 
@@ -9,12 +12,11 @@ const Header = () => {
     return (
 
         <header className='flex  justify-between items-center mx-0 w-full bg-my-A text-xl text-my-E p-1'>
-            <NavLink to="/" className="font-bold mx-1" > Ecoride</NavLink>
+            <NavLink to="/" className="font-bold mx-1 text-my-C" > Ecoride</NavLink>
             <button
-                className="md:hidden text-2xl"
-                onClick={() => setIsOpen(prev => !prev)}
-            >
-                ☰
+                className="md:hidden text-2xl order-last mx-2"
+                onClick={() => setIsOpen(prev => !prev)} >
+                {isOpen ? "✖" : "☰"}
             </button>
             <nav className={`${isOpen ? 'block' : 'hidden'} md:block`}>
                 <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0   md:space-x-6 p-2">
@@ -32,9 +34,12 @@ const Header = () => {
                         Connexion</NavLink></li>
                 </ul>
             </nav>
-
         </header>
+
     )
+
 }
+
+
 
 export default Header
