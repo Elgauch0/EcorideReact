@@ -1,5 +1,7 @@
-import { Form, useActionData, useNavigation } from "react-router";
+import { Form, redirect, useActionData, useNavigation } from "react-router";
 import { ValidateDate, cleanSimpleText } from "../utils/functions";
+import { searchItineraries } from "../utils/actions";
+import { useEffect } from "react";
 
 
 
@@ -16,15 +18,20 @@ export async function action({ request }) {
         destination: destination,
         date: date
     };
-    await fetch("http://localhost:8000/api/itinerary/search", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-    }).then(res => res.json()).then(data => console.log(data)).catch(err => console.log(err));
+    const res = await searchItineraries(requestBody);
+    if (res.error) {
+        return res;
+    }
+    if (res.data.length === 0) {
+        return {
+            error: true,
+            message: "Désolé, aucun itinéraire trouvé pour ces critères de recherche. Essayez d'autres options."
+        };
+    }
+    console.log('action', res);
+    sessionStorage.setItem('itineraries', JSON.stringify(res));
 
-
+    // return redirect('/itineraries');
 
 
 }
@@ -34,12 +41,9 @@ const CarpoolingForm = () => {
     const { state } = useNavigation();
     const isSubmitting = state === 'submitting';
 
-
-
-
-
-
-
+    useEffect(() => {
+        sessionStorage.removeItem("itineraries");
+    }, []);
 
 
 
