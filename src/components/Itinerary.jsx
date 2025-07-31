@@ -1,7 +1,11 @@
 // src/components/Itinerary.jsx
-import React from 'react';
+
+import { useState } from "react";
+
 
 export default function Itinerary({ itinerary }) {
+    const [vehiCard, setVehiculC] = useState(false);
+
     return (
         <div
             className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl
@@ -34,35 +38,42 @@ export default function Itinerary({ itinerary }) {
                         {itinerary.duration} min
                     </p>
                 )}
+                <button onClick={() => { setVehiculC(prev => !prev) }}>{vehiCard ? "masquer les details " : "afficher les details du chauffeur"}</button>
             </div>
 
             {/* Détails véhicule */}
-            {itinerary.vehicule && (
-                <div className="text-sm text-gray-600 border-t pt-3 mt-4">
-                    <p className="font-semibold mb-1">Détails du véhicule:</p>
-                    <ul className="list-disc list-inside space-y-1">
-                        <li>ID: {itinerary.vehicule.id}</li>
-                        <li>
-                            Fumeur autorisé:{' '}
-                            {itinerary.vehicule.isSmocking_alowed ? 'Oui' : 'Non'}
-                        </li>
-                        <li>
-                            Animaux autorisés:{' '}
-                            {itinerary.vehicule.isPets_alowed ? 'Oui' : 'Non'}
-                        </li>
-                        <li>
-                            Écologique (vert): {itinerary.vehicule.isGreen ? 'Oui' : 'Non'}
-                        </li>
-                        {itinerary.vehicule.driver && (
+
+
+
+            {
+                vehiCard && itinerary.vehicule && (
+                    <div className="text-sm text-gray-600 border-t pt-3 mt-4">
+                        <p className="font-semibold mb-1">Détails du véhicule:</p>
+                        <ul className="list-disc list-inside space-y-1">
+                            <li>ID: {itinerary.vehicule.id}</li>
                             <li>
-                                Conducteur:{' '}
-                                {itinerary.vehicule.driver.firstName}{' '}
-                                {itinerary.vehicule.driver.lastName}
+                                Fumeur autorisé:{' '}
+                                {itinerary.vehicule.isSmocking_alowed ? 'Oui' : 'Non'}
                             </li>
-                        )}
-                    </ul>
-                </div>
-            )}
+                            <li>
+                                Animaux autorisés:{' '}
+                                {itinerary.vehicule.isPets_alowed ? 'Oui' : 'Non'}
+                            </li>
+                            <li>
+                                Écologique (vert): {itinerary.vehicule.isGreen ? 'Oui' : 'Non'}
+                            </li>
+                            {itinerary.vehicule.driver && (
+                                <li>
+                                    Conducteur:{' '}
+                                    {itinerary.vehicule.driver.firstName}{' '}
+                                    {itinerary.vehicule.driver.lastName}
+                                </li>
+                            )}
+                        </ul>
+                    </div>
+                )
+            }
+
         </div>
     );
 }
