@@ -25,9 +25,51 @@ function App() {
 
       <Route path="connexion" element={<Connexion />} action={loginAction} />
       <Route path="register" element={<Registration />} action={registrationAction} />
-
-
       <Route path="itineraries" element={<Itineraries />} loader={itinerariesLoader} />
+
+
+
+
+
+
+      {/* User Page -------------------------------------------------------------------------------------------------------------------------- */}
+
+      <Route>
+        <Route path="user" element={<h1>userPage</h1>} />
+
+      </Route>
+
+      {/* Driver Page -------------------------------------------------------------------------------------------------------------------------- */}
+
+
+      <Route>
+        <Route path="driver" element={<h1>Driver Page</h1>} />
+
+      </Route>
+
+      {/* Manager Page -------------------------------------------------------------------------------------------------------------------------- */}
+
+
+      <Route>
+        <Route path="manager" element={<h1>Manager Page</h1>} />
+
+      </Route>
+
+
+      {/* Admin Page -------------------------------------------------------------------------------------------------------------------------- */}
+
+
+      <Route>
+        <Route path="admin" element={<h1>Admin Page</h1>} />
+
+      </Route>
+
+
+
+
+
+
+
 
       <Route path="*" element={<Notfound />} />
 

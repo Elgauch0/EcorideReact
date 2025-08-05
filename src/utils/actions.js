@@ -1,68 +1,113 @@
-
 const apiURL = import.meta.env.VITE_API_URL;
+import { handleToken } from "./functions";
 
-export async function searchItineraries(requestBody){
-   
+export async function searchItineraries(requestBody) {
+  try {
+    const response = await fetch(`${apiURL}/guest/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
 
-    try {
-        const response = await fetch(`${apiURL}/itinerary/search`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(requestBody),
-        });
+    const data = await response.json();
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            console.error(`Backend Error (${response.status}):`, data);
-            return {
-                error: true,
-                message: data.message || data.detail || "Le serveur a retourné une erreur.",  
-            };
-        }
-        return { error: false, data: data  };
-
-    } catch (err) {
-       
-        console.error("Erreur de connexion dans searchItineraries:", err);
-        return {
-            error: true,
-            message: "Impossible de se connecter au serveur. Vérifie ta connexion.", 
-        };
+    if (!response.ok) {
+      console.error(`Backend Error (${response.status}):`, data);
+      return {
+        error: true,
+        essage: err.message || "server not responding",
+      };
     }
+    return { error: false, data: data };
+  } catch (err) {
+    console.error("Erreur de connexion dans searchItineraries:", err);
+    return {
+      error: true,
+      message: "Impossible de se connecter au serveur. Vérifie ta connexion.",
+    };
+  }
 }
 export async function createUser(requestBody) {
-    try {
-        const response = await fetch(`${apiURL}/user`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(requestBody),
-        });
+  try {
+    const response = await fetch(`${apiURL}/guest/adduser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
 
-        const data = await response.json(); 
+    const data = await response.json();
 
-        if (!response.ok) {
-            console.error(`Backend Error (${response?.status}):`, data);
-            return {
-                error: true,
-                message: data.message || `Une erreur est survenue (statut: ${response?.status}).`
-            };
-        }
-
-        return { error: false,
-                 message: 'Votre inscription est complète ! Connectez-vous dès maintenant pour commencer.' };
-
-    } catch (err) {
-        console.error("Erreur de connexion dans createUser:", err);
-        return {
-            error: true,
-            message: "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet."
-        };
+    if (!response.ok) {
+      console.error(`Backend Error (${response?.status}):`, data);
+      return {
+        error: true,
+        message:
+          data.message ||
+          `Une erreur est survenue (statut: ${response?.status}).`,
+      };
     }
+
+    return {
+      error: false,
+      message:
+        "Votre inscription est complète ! Connectez-vous dès maintenant pour commencer.",
+    };
+  } catch (err) {
+    console.error("Erreur de connexion dans createUser:", err);
+    return {
+      error: true,
+      message:
+        "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet.",
+    };
+  }
+}
+export async function loginUser(requestBody) {
+  try {
+    const response = await fetch(`${apiURL}/login_check`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Erreur API :", data);
+      return {
+        error: true,
+        message: data?.message || "Réponse du serveur non valide",
+      };
+    }
+
+    let dashboardPath;
+    try {
+      dashboardPath = handleToken(data.token); // handleToken doit retourner le chemin du dashboard
+    } catch (tokenError) {
+      console.error("Erreur dans handleToken :", tokenError.message);
+      return {
+        error: true,
+        message: tokenError.message || "Erreur lors du traitement du token",
+      };
+    }
+
+    return {
+      error: false,
+      dashboard: dashboardPath,
+    };
+  } catch (err) {
+    console.error("Erreur réseau ou serveur :", err);
+    return {
+      error: true,
+      message: err?.message || "Le serveur ne répond pas",
+    };
+  }
 }

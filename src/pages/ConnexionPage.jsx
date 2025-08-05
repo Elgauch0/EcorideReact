@@ -1,18 +1,25 @@
-import { Form, useNavigation, useSearchParams, Link } from "react-router";
+import { Form, useNavigation, useSearchParams, Link, redirect } from "react-router";
+import { loginUser } from "../utils/actions";
 
 
 
 export async function action({ request }) {
     const formData = await request.formData();
-    const email = formData.get('email');
+    const username = formData.get('email');
     const password = formData.get('password');
-    console.log(email, password);
+    const response = await loginUser({ username, password });
+    if (response.error) {
+        return redirect(`?error=${response.message}`);
+    }
+    return redirect(response.dashboard);
 }
 
 
 const Connexion = () => {
     const [searchParams] = useSearchParams();
     const message = searchParams.get('message');
+    const error = searchParams.get('error');
+
     const { state } = useNavigation();
     const isSubmitting = state === 'submitting';
 
@@ -25,6 +32,15 @@ const Connexion = () => {
                     aria-live="polite"
                 >
                     {message}
+                </h2>
+            )}
+            {error && (
+                <h2
+                    className="text-red-800 font-semibold mt-4 text-center"
+                    role="status"
+                    aria-live="polite"
+                >
+                    {error}
                 </h2>
             )}
 
