@@ -4,7 +4,7 @@ import {
   createRoutesFromElements,
   Route
 } from "react-router";
-import PrimeLayout from "./pages/PrimeLayout";
+import PrimeLayout from "./Layouts/PrimeLayout";
 import Home from "./pages/HomePage";
 import { action as actionForm } from "./components/CarpoolingForm";
 import ErrorElement from "./components/ErrorElement";
@@ -13,6 +13,7 @@ import Itineraries, { loader as itinerariesLoader } from "./pages/ItinerariesPag
 import Connexion, { action as loginAction } from "./pages/ConnexionPage";
 import Registration from "./pages/RegistrationPage";
 import { action as registrationAction } from './components/UserRegistrationForm'
+import LayoutProtection, { loader as loaderProtection } from "./Layouts/LayoutProtection";
 
 
 
@@ -31,43 +32,44 @@ function App() {
 
 
 
+      <Route element={< LayoutProtection />} loader={loaderProtection}>
 
-      {/* User Page -------------------------------------------------------------------------------------------------------------------------- */}
 
-      <Route>
+        {/* User Page -------------------------------------------------------------------------------------------------------------------------- */}
         <Route path="user" element={<h1>userPage</h1>} />
 
-      </Route>
-
-      {/* Driver Page -------------------------------------------------------------------------------------------------------------------------- */}
 
 
-      <Route>
+        {/* Driver Page -------------------------------------------------------------------------------------------------------------------------- */}
+
+
+
         <Route path="driver" element={<h1>Driver Page</h1>} />
 
-      </Route>
-
-      {/* Manager Page -------------------------------------------------------------------------------------------------------------------------- */}
 
 
-      <Route>
+        {/* Manager Page -------------------------------------------------------------------------------------------------------------------------- */}
+
+
+
         <Route path="manager" element={<h1>Manager Page</h1>} />
 
-      </Route>
 
 
-      {/* Admin Page -------------------------------------------------------------------------------------------------------------------------- */}
+
+        {/* Admin Page -------------------------------------------------------------------------------------------------------------------------- */}
 
 
-      <Route>
+
         <Route path="admin" element={<h1>Admin Page</h1>} />
 
+
+
+
+
+
+
       </Route>
-
-
-
-
-
 
 
 

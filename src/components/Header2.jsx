@@ -3,12 +3,11 @@ import { useState } from 'react'
 import { useAuthStore } from "../store/AuthStore.js";
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const style = "font-bold text-my-D underline";
-    const { isLogged, logout } = useAuthStore();
-
-
-
-
+    const style = "font-bold text-my-D underline"
+    const { isLogged, logout } = useAuthStore((state) => ({
+        isLogged: state.isLogged,
+        logout: state.logout,
+    }));
     const navigate = useNavigate();
 
     const handleLogout = () => {

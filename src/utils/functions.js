@@ -1,4 +1,5 @@
 import { jwtDecode } from "jwt-decode";
+import { useAuthStore } from "../store/AuthStore.js";
 
 export const cleanSimpleText = (str) => {
   if (typeof str !== "string") {
@@ -41,20 +42,16 @@ export const handleToken = (token) => {
   } catch (err) {
     throw new Error("Échec du décodage du token JWT");
   }
-  console.log(decoded);
 
-  const { roles, username, exp, userID } = decoded;
-
-  if (!roles || !username) {
-    throw new Error("Le token ne contient pas les informations nécessaires");
+  const { roles, exp, userID } = decoded;
+  try {
+    useAuthStore.getState().login(token, roles, exp, userID);
+  } catch (error) {
+    console.error("Error updating auth store:", error);
+    throw new Error(
+      "Erreur lors de la mise à jour de l'état d'authentification"
+    );
   }
-
-  localStorage.setItem("token", token);
-  localStorage.setItem("username", username);
-  localStorage.setItem("roles", JSON.stringify(roles));
-  localStorage.setItem("token_exp", exp);
-  localStorage.setItem("isLogged", true);
-  localStorage.setItem("userID", userID);
 
   // Détermination du dashboard
   let dashboard = "";
@@ -72,4 +69,48 @@ export const handleToken = (token) => {
   }
 
   return dashboard;
+};
+
+////////////////////////////////////////////////////////////-----Authentication -----///////////////////////////////////////////////////////////////
+
+export const roleRequis = (pathname) => {
+  if (pathname.startsWith("/admin")) return "ROLE_ADMIN";
+  if (pathname.startsWith("/manager")) return "ROLE_MANAGER";
+  if (pathname.startsWith("/driver")) return "ROLE_DRIVER";
+  if (pathname.startsWith("/user")) return "ROLE_USER";
+  return null;
+};
+
+export const checkAuthorization = (request) => {
+  const { isLogged, token_exp, roles, logout } = useAuthStore.getState();
+  const pathname = new URL(request.url).pathname;
+
+  // 1. L’utilisateur est-il connecté ?
+  if (!isLogged) {
+    return `/connexion?error=${encodeURIComponent(
+      "Vous devez être connecté pour accéder à cette page"
+    )}`;
+  }
+
+  const now = Date.now() / 1000;
+  if (token_exp && now > token_exp) {
+    logout();
+    return `/connexion?error=${encodeURIComponent(
+      "Votre session a expiré, veuillez vous reconnecter"
+    )}`;
+  }
+
+  // 3. L’utilisateur a-t-il le rôle requis pour cette route ?
+  const requiredRole = roleRequis(pathname);
+  if (
+    requiredRole &&
+    (!Array.isArray(roles) || !roles.includes(requiredRole))
+  ) {
+    return `/connexion?error=${encodeURIComponent(
+      "Vous n'avez pas la permission d'accéder à cette page"
+    )}`;
+  }
+
+  // Tout est OK
+  return null;
 };
