@@ -1,39 +1,60 @@
 // src/pages/Itineraries.jsx
-import Itinerary from '../components/Itinerary';
-import { useLoaderData } from "react-router"
-
+import { useLoaderData, redirect } from "react-router";
+import Itinerary from "../components/Itinerary";
 
 export function loader() {
-    const raw = sessionStorage.getItem('itineraries');
-    if (!raw) {
-        throw new Error('no data in the sessionStorage');
+    const rawData = sessionStorage.getItem("itineraries");
+    const rawCities = sessionStorage.getItem("itinerary");
+
+    if (!rawData || !rawCities) {
+        return redirect(
+            "/covoiturage?error=Aucun trajet trouvé. Veuillez d'abord effectuer une recherche."
+        );
     }
-    let items;
+
     try {
-        items = JSON.parse(raw);
+        const list = JSON.parse(rawData);
+        const itinerary = JSON.parse(rawCities);
+
+        if (!Array.isArray(list) || list.length === 0) {
+            return redirect(
+                "/covoiturage?error=Aucun trajet trouvé. Veuillez d'abord effectuer une recherche."
+            );
+        }
+
+        return { list, itinerary };
     } catch (err) {
-        console.error('Impossible de parser les itinéraires :', err);
+        console.error("Erreur parsing sessionStorage :", err);
+        return redirect(
+            "/covoiturage?error=Erreur interne. Merci de relancer la recherche."
+        );
     }
-    return items;
 }
 
-
 export default function Itineraries() {
-
-    const Data = useLoaderData();
-    const list = Data.data;
-
-
-    if (list.length === 0) {
-        return <p>Aucun itinéraire disponible.</p>;
-    }
+    const { list, itinerary } = useLoaderData();
+    const { departureCity, arrivalCity } = itinerary;
 
     return (
-        <div className="container mx-auto grid gap-4
-                    sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {list.map((itin) => (
-                <Itinerary key={itin.id} itinerary={itin} />
-            ))}
-        </div>
+        <main className="min-h-screen bg-gray-50 py-12 px-4">
+            {/* En-tête centré */}
+            <header className="max-w-3xl mx-auto text-center space-y-2 mb-12">
+                <h1 className="text-4xl font-extrabold text-gray-900">
+                    {departureCity} → {arrivalCity}
+                </h1>
+                <p className="text-lg text-gray-700">
+                    Choisissez votre itinéraire parmi les options ci-dessous
+                </p>
+            </header>
+
+            {/* Grille centrée */}
+            <section className="max-w-6xl mx-auto">
+                <div className="grid justify-center gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    {list.map((itin) => (
+                        <Itinerary key={itin.id} itinerary={itin} />
+                    ))}
+                </div>
+            </section>
+        </main>
     );
 }

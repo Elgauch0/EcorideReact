@@ -18,7 +18,7 @@ export async function searchItineraries(requestBody) {
       console.error(`Backend Error (${response.status}):`, data);
       return {
         error: true,
-        essage: err.message || "server not responding",
+        message: err.message || "server not responding",
       };
     }
     return { error: false, data: data };

@@ -1,79 +1,66 @@
 // src/components/Itinerary.jsx
 
-import { useState } from "react";
 
-
-export default function Itinerary({ itinerary }) {
-    const [vehiCard, setVehiculC] = useState(false);
+export default function Itinerary({ itinerary, onReserve }) {
+    const { datetime, price, places, duration, vehicule, id } = itinerary;
+    const dateStr = new Date(datetime).toLocaleString("fr-FR", {
+        weekday: "short",
+        day: "numeric",
+        month: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
 
     return (
-        <div
-            className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl
-                 transition-shadow duration-300 transform hover:-translate-y-1"
-        >
-            {/* Villes */}
-            <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {itinerary.departureCity} &rarr; {itinerary.arrivalCity}
-            </h3>
-
-            {/* Détails principaux */}
-            <div className="space-y-2 text-gray-700">
-                <p>
-                    <span className="font-semibold text-blue-700">Date:</span>{' '}
-                    {itinerary.datetime}
-                </p>
-                <p>
-                    <span className="font-semibold text-blue-700">Prix:</span>{' '}
-                    {itinerary.price}€
-                </p>
-                <p>
-                    <span className="font-semibold text-blue-700">
-                        Places disponibles:
-                    </span>{' '}
-                    {itinerary.places}
-                </p>
-                {itinerary.duration && (
-                    <p>
-                        <span className="font-semibold text-blue-700">Durée:</span>{' '}
-                        {itinerary.duration} min
-                    </p>
-                )}
-                <button onClick={() => { setVehiculC(prev => !prev) }}>{vehiCard ? "masquer les details " : "afficher les details du chauffeur"}</button>
+        <div className="flex flex-col justify-between bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 max-w-sm">
+            {/* Date / Heure */}
+            <div className="mb-4">
+                <span className="inline-block text-gray-500 text-sm">{dateStr}</span>
             </div>
 
-            {/* Détails véhicule */}
-
-
-
-            {
-                vehiCard && itinerary.vehicule && (
-                    <div className="text-sm text-gray-600 border-t pt-3 mt-4">
-                        <p className="font-semibold mb-1">Détails du véhicule:</p>
-                        <ul className="list-disc list-inside space-y-1">
-                            <li>ID: {itinerary.vehicule.id}</li>
-                            <li>
-                                Fumeur autorisé:{' '}
-                                {itinerary.vehicule.isSmocking_alowed ? 'Oui' : 'Non'}
-                            </li>
-                            <li>
-                                Animaux autorisés:{' '}
-                                {itinerary.vehicule.isPets_alowed ? 'Oui' : 'Non'}
-                            </li>
-                            <li>
-                                Écologique (vert): {itinerary.vehicule.isGreen ? 'Oui' : 'Non'}
-                            </li>
-                            {itinerary.vehicule.driver && (
-                                <li>
-                                    Conducteur:{' '}
-                                    {itinerary.vehicule.driver.firstName}{' '}
-                                    {itinerary.vehicule.driver.lastName}
-                                </li>
-                            )}
-                        </ul>
+            {/* Détails principaux */}
+            <div className="space-y-3 text-gray-700 text-sm">
+                <div className="flex items-center">
+                    <span className="mr-2">💶</span>
+                    <span className="font-medium">{price} €</span>
+                </div>
+                <div className="flex items-center">
+                    <span className="mr-2">🪑</span>
+                    <span className="font-medium">{places} places</span>
+                </div>
+                {duration && (
+                    <div className="flex items-center">
+                        <span className="mr-2">⏱️</span>
+                        <span className="font-medium">{duration} min</span>
                     </div>
-                )
-            }
+                )}
+            </div>
 
+            {/* Véhicule */}
+            {vehicule && (
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-6 text-gray-700 text-sm">
+                    <h4 className="font-semibold mb-2">🚗 Véhicule</h4>
+                    <ul className="list-disc list-inside space-y-1">
+                        <li>Écologique : {vehicule.isGreen ? "Oui" : "Non"}</li>
+                        {vehicule.driver && (
+                            <li>
+                                Conducteur : {vehicule.driver.firstName}
+                                {vehicule.driver.lastName}
+                            </li>
+                        )}
+                    </ul>
+                </div>
+            )}
+
+            {/* Bouton de réservation */}
+            {onReserve && (
+                <button
+                    onClick={() => onReserve(id)}
+                    className="mt-6 w-full py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition"
+                >
+                    Réserver
+                </button>
+            )}
         </div>
     );
 }

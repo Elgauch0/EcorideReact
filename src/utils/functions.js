@@ -82,22 +82,29 @@ export const roleRequis = (pathname) => {
 };
 
 export const checkAuthorization = (request) => {
-  const { isLogged, token_exp, roles, logout } = useAuthStore.getState();
+  const { isLogged, token_exp, roles, logout, userID } =
+    useAuthStore.getState();
   const pathname = new URL(request.url).pathname;
 
   // 1. L’utilisateur est-il connecté ?
   if (!isLogged) {
-    return `/connexion?error=${encodeURIComponent(
-      "Vous devez être connecté pour accéder à cette page"
-    )}`;
+    return {
+      error: true,
+      message: `/connexion?error=${encodeURIComponent(
+        "Vous devez être connecté pour accéder à cette page"
+      )}`,
+    };
   }
 
   const now = Date.now() / 1000;
   if (token_exp && now > token_exp) {
     logout();
-    return `/connexion?error=${encodeURIComponent(
-      "Votre session a expiré, veuillez vous reconnecter"
-    )}`;
+    return {
+      error: true,
+      message: `/connexion?error=${encodeURIComponent(
+        "Votre session a expiré, veuillez vous reconnecter"
+      )}`,
+    };
   }
 
   // 3. L’utilisateur a-t-il le rôle requis pour cette route ?
@@ -106,11 +113,13 @@ export const checkAuthorization = (request) => {
     requiredRole &&
     (!Array.isArray(roles) || !roles.includes(requiredRole))
   ) {
-    return `/connexion?error=${encodeURIComponent(
-      "Vous n'avez pas la permission d'accéder à cette page"
-    )}`;
+    return {
+      error: true,
+      message: `/connexion?error=${encodeURIComponent(
+        "Vous n'avez pas la permission d'accéder à cette page"
+      )}`,
+    };
   }
 
-  // Tout est OK
-  return null;
+  return { error: false, userID };
 };

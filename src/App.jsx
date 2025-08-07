@@ -14,6 +14,8 @@ import Connexion, { action as loginAction } from "./pages/ConnexionPage";
 import Registration from "./pages/RegistrationPage";
 import { action as registrationAction } from './components/UserRegistrationForm'
 import LayoutProtection, { loader as loaderProtection } from "./Layouts/LayoutProtection";
+import UserComponent, { loader as userLoader } from "./components/UserComponent";
+import CarpoolingForm from "./components/CarpoolingForm";
 
 
 
@@ -21,7 +23,7 @@ function App() {
   let router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<PrimeLayout />} errorElement={<ErrorElement />}>
       <Route index element={< Home />} action={actionForm} />
-      <Route path="covoiturage" element={<h1>covoiturage page</h1>} />
+      <Route path="covoiturage" element={<CarpoolingForm />} action={actionForm} />
       <Route path="contact" element={<h1>contact page</h1>} />
 
       <Route path="connexion" element={<Connexion />} action={loginAction} />
@@ -32,11 +34,12 @@ function App() {
 
 
 
-      <Route element={< LayoutProtection />} loader={loaderProtection}>
+      <Route element={< LayoutProtection />} loader={loaderProtection} shouldRevalidate={() => true}>
 
 
         {/* User Page -------------------------------------------------------------------------------------------------------------------------- */}
-        <Route path="user" element={<h1>userPage</h1>} />
+        <Route path="user" element={<UserComponent />} loader={userLoader} />
+
 
 
 
