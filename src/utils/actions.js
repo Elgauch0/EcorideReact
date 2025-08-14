@@ -111,3 +111,39 @@ export async function loginUser(requestBody) {
     };
   }
 }
+
+export async function reserveItinerary(
+  itineraryId,
+  userID,
+  seatsReserved,
+  token
+) {
+  try {
+    const response = await fetch(apiURL + "/user/addreservation", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+
+      body: JSON.stringify({
+        clientId: userID,
+        itineraryId,
+        seatsReserved,
+      }),
+    });
+
+    if (!response.ok) {
+      console.log(response);
+      return { error: true, message: "response not OK" };
+    }
+    return {
+      error: false,
+      message: "reservation effectuée avec succes",
+    };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: `${err?.message}` };
+  }
+}

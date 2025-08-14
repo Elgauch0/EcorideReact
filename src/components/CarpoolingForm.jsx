@@ -44,6 +44,7 @@ const CarpoolingForm = () => {
     const isSubmitting = state === "submitting";
     const [searchParams] = useSearchParams();
     const urlError = searchParams.get("error");
+    const success = searchParams.get('success');
 
     useEffect(() => {
         sessionStorage.removeItem("itineraries");
@@ -71,6 +72,15 @@ const CarpoolingForm = () => {
                         className="p-4 bg-red-100 border border-red-400 text-red-700 rounded text-center"
                     >
                         {urlError || result.message}
+                    </div>
+                )}
+                {/* Erreur centrée */}
+                {success && (
+                    <div
+
+                        className="p-4 bg-green-100 border border-green-300 text-green-600 rounded text-center"
+                    >{success}
+
                     </div>
                 )}
 

@@ -5,7 +5,7 @@ import { checkAuthorization } from "../utils/functions";
 
 
 export const loader = async ({ request }) => {
-    const redirectTo = checkAuthorization(request);
+    const redirectTo = checkAuthorization(request.url);
     if (redirectTo.error) {
         throw redirect(redirectTo.message);
     }

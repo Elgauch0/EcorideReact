@@ -16,6 +16,7 @@ import { action as registrationAction } from './components/UserRegistrationForm'
 import LayoutProtection, { loader as loaderProtection } from "./Layouts/LayoutProtection";
 import UserComponent, { loader as userLoader } from "./components/UserComponent";
 import CarpoolingForm from "./components/CarpoolingForm";
+import DetailComponent, { action as actionDetail, loader as detailLoader } from "./components/DetailComponent";
 
 
 
@@ -29,6 +30,7 @@ function App() {
       <Route path="connexion" element={<Connexion />} action={loginAction} />
       <Route path="register" element={<Registration />} action={registrationAction} />
       <Route path="itineraries" element={<Itineraries />} loader={itinerariesLoader} />
+      <Route path="detail" element={<DetailComponent />} loader={detailLoader} action={actionDetail} />
 
 
 

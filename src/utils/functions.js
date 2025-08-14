@@ -81,10 +81,18 @@ export const roleRequis = (pathname) => {
   return null;
 };
 
-export const checkAuthorization = (request) => {
-  const { isLogged, token_exp, roles, logout, userID } =
+export const checkAuthorization = (url) => {
+  const { isLogged, token_exp, roles, logout, userID, token } =
     useAuthStore.getState();
-  const pathname = new URL(request.url).pathname;
+  let pathname = "/user";
+  if (typeof url === "string") {
+    try {
+      pathname = new URL(url).pathname;
+    } catch (e) {
+      console.error("URL invalide dans checkAuthorization:", url);
+      pathname = "/user"; // fallback
+    }
+  }
 
   // 1. L’utilisateur est-il connecté ?
   if (!isLogged) {
@@ -121,5 +129,5 @@ export const checkAuthorization = (request) => {
     };
   }
 
-  return { error: false, userID };
+  return { error: false, userID, token };
 };

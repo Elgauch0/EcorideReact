@@ -5,12 +5,11 @@ import { checkAuthorization } from "../utils/functions.js";
 
 
 export const loader = async ({ request }) => {
-    const checked = checkAuthorization(request);
-    if (checked.error) {
-        throw redirect(`${checked?.message}`);
+    const response = checkAuthorization(request.url);
+    if (response.error) {
+        throw redirect(`${response?.message}`);
     }
-
-    const res = await getUserData(checked.userID);
+    const res = await getUserData(response.userID, response.token);
     if (res.error) {
         throw redirect(`/connexion?error=${res?.message}`);
     }
