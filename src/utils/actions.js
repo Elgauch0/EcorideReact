@@ -1,5 +1,5 @@
 const apiURL = import.meta.env.VITE_API_URL;
-import { handleToken } from "./functions";
+import { checkAuthorization, handleToken } from "./functions";
 
 export async function searchItineraries(requestBody) {
   try {
@@ -145,5 +145,29 @@ export async function reserveItinerary(
   } catch (err) {
     console.error(err);
     return { error: true, message: `${err?.message}` };
+  }
+}
+
+export async function addVehicle(requestBody) {
+  const { token } = checkAuthorization();
+  try {
+    const response = await fetch(apiURL + "/user/addvehicle", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestBody),
+    });
+    if (!response.ok) {
+      return { error: true, message: "serveur renvoie une mauvaise response " };
+    }
+    return { error: false, message: "voiture bien  ajouté " };
+
+    //const data = await response.json();
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "erreur dans le catch" };
   }
 }

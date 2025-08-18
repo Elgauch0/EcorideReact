@@ -16,6 +16,11 @@ export const useAuthStore = create((set) => ({
       userID,
     });
   },
+  setRole: (role) => {
+    set((state) => ({
+      roles: [...state.roles, role],
+    }));
+  },
 
   // Action to handle logout
   logout: () => {

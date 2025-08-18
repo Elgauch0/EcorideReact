@@ -34,9 +34,14 @@ export async function action({ request }) {
             )}`
         );
     }
-    const formData = await request.formData()
-    const seats = Number(formData.get('seats'));
-    const itineraryId = Number(formData.get('itineraryID'));
+    const formData = await request.formData();
+    const seatsRaw = formData.get('seats');
+    const itineraryIdRaw = formData.get('itineraryID');
+
+    const seats = seatsRaw && !isNaN(seatsRaw) ? Number(seatsRaw) : null;
+    const itineraryId = itineraryIdRaw && !isNaN(itineraryIdRaw) ? Number(itineraryIdRaw) : null;
+
+
     const response = await reserveItinerary(itineraryId, userID, seats, token);
     if (response.error) {
         return redirect(`/covoiturage?error=${response.message}`);

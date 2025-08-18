@@ -14,7 +14,7 @@ import Connexion, { action as loginAction } from "./pages/ConnexionPage";
 import Registration from "./pages/RegistrationPage";
 import { action as registrationAction } from './components/UserRegistrationForm'
 import LayoutProtection, { loader as loaderProtection } from "./Layouts/LayoutProtection";
-import UserComponent, { loader as userLoader } from "./components/UserComponent";
+import UserComponent, { loader as userLoader, action as userAction } from "./components/UserComponent";
 import CarpoolingForm from "./components/CarpoolingForm";
 import DetailComponent, { action as actionDetail, loader as detailLoader } from "./components/DetailComponent";
 
@@ -40,7 +40,7 @@ function App() {
 
 
         {/* User Page -------------------------------------------------------------------------------------------------------------------------- */}
-        <Route path="user" element={<UserComponent />} loader={userLoader} />
+        <Route path="user" element={<UserComponent />} loader={userLoader} action={userAction} />
 
 
 
