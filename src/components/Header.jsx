@@ -1,14 +1,12 @@
 import { NavLink, useNavigate } from 'react-router'
 import { useState } from 'react'
 import { useAuthStore } from "../store/AuthStore.js";
+import { determineDashboard } from '../utils/functions.js';
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const style = "font-bold text-my-D underline";
-    const { isLogged, logout } = useAuthStore();
-
-
-
-
+    const { isLogged, logout, roles } = useAuthStore();
+    const dashboard = roles.length > 0 ? determineDashboard(roles) : "/dashboard";
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -28,6 +26,9 @@ const Header = () => {
 
             <nav className={`${isOpen ? 'block' : 'hidden'} md:block`}>
                 <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 p-2">
+                    {isLogged && roles.length > 0 && (
+                        <li><NavLink to={dashboard} className={({ isActive }) => isActive ? style : ""}>Dashboard</NavLink></li>
+                    )}
                     <li><NavLink to="/covoiturage" className={({ isActive }) => isActive ? style : null}>Covoiturage</NavLink></li>
                     <li><NavLink to="/contact" className={({ isActive }) => isActive ? style : null}>Contact</NavLink></li>
                     {!isLogged ? (

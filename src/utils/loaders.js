@@ -1,10 +1,12 @@
+import { checkAuthorization } from "./functions";
+
 //loaders.js
 const apiURL = import.meta.env.VITE_API_URL;
 const userURL = apiURL + "/user";
 
-export async function getUserData(userID, token) {
+export async function getUserData(token) {
   try {
-    const response = await fetch(userURL + `/getuser/${userID}`, {
+    const response = await fetch(userURL + "/getuser", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -65,5 +67,28 @@ export function getItinerariesDataFromSessionStorage() {
       message:
         "/covoiturage?error=Erreur interne. Merci de relancer la recherche.",
     };
+  }
+}
+
+export async function getVehicle() {
+  const { token } = checkAuthorization();
+  try {
+    const response = await fetch(userURL + "/getvehicle", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      console.error(response);
+      return { error: true, message: result.message };
+    }
+    return { error: false, result };
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: "erreur dans le catch" };
   }
 }

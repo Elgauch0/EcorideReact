@@ -171,3 +171,29 @@ export async function addVehicle(requestBody) {
     return { error: true, message: "erreur dans le catch" };
   }
 }
+
+export async function addItinerary(requestBody) {
+  const { token } = checkAuthorization();
+  try {
+    const response = await fetch(apiURL + "/user/additinerary", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestBody),
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error(response);
+      return { error: true, message: data.message || "Erreur inconnue" };
+    }
+    console.log(data);
+    return { error: false, message: "itineraire publié" };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "erreur dans le catch" };
+  }
+}

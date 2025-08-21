@@ -17,9 +17,12 @@ export const useAuthStore = create((set) => ({
     });
   },
   setRole: (role) => {
-    set((state) => ({
-      roles: [...state.roles, role],
-    }));
+    set((state) => {
+      if (!state.roles.includes(role)) {
+        return { roles: [...state.roles, role] };
+      }
+      return {};
+    });
   },
 
   // Action to handle logout

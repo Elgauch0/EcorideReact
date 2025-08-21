@@ -14,9 +14,13 @@ import Connexion, { action as loginAction } from "./pages/ConnexionPage";
 import Registration from "./pages/RegistrationPage";
 import { action as registrationAction } from './components/UserRegistrationForm'
 import LayoutProtection, { loader as loaderProtection } from "./Layouts/LayoutProtection";
-import UserComponent, { loader as userLoader, action as userAction } from "./components/UserComponent";
+import UserComponent, { loader as userLoader } from "./components/UserComponent";
 import CarpoolingForm from "./components/CarpoolingForm";
 import DetailComponent, { action as actionDetail, loader as detailLoader } from "./components/DetailComponent";
+import DriverComponent from "./components/DriverComponent";
+import DriverLayout from "./Layouts/DriverLayout";
+import ItineraryAddForm, { action as itineraryAction, loader as itineraryLoader } from "./components/ItineraryAddForm";
+import AddVehicle, { action as addVehicleAction } from "./components/AddVehicle";
 
 
 
@@ -36,11 +40,13 @@ function App() {
 
 
 
-      <Route element={< LayoutProtection />} loader={loaderProtection} shouldRevalidate={() => true}>
+
+      <Route element={< LayoutProtection />} loader={loaderProtection} shouldRevalidate={() => false}>
 
 
         {/* User Page -------------------------------------------------------------------------------------------------------------------------- */}
-        <Route path="user" element={<UserComponent />} loader={userLoader} action={userAction} />
+        <Route path="user" element={<UserComponent />} loader={userLoader} />
+        <Route path="addVehicle" element={<AddVehicle />} action={addVehicleAction} />
 
 
 
@@ -48,8 +54,10 @@ function App() {
         {/* Driver Page -------------------------------------------------------------------------------------------------------------------------- */}
 
 
-
-        <Route path="driver" element={<h1>Driver Page</h1>} />
+        <Route path="driver" element={< DriverLayout />} loader={userLoader} >
+          <Route index element={< DriverComponent />} />
+          <Route path="additinerary" element={<ItineraryAddForm />} action={itineraryAction} loader={itineraryLoader} />
+        </Route>
 
 
 
@@ -80,7 +88,7 @@ function App() {
 
       <Route path="*" element={<Notfound />} />
 
-    </Route>
+    </Route >
 
 
   ), {

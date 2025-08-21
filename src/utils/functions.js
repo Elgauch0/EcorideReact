@@ -11,21 +11,52 @@ export const cleanSimpleText = (str) => {
   return cleanedStr.trim().toLowerCase();
 };
 
-export const ValidateDate = (dateEntree) => {
+export const ValidateDate = (dateEntree, past = false) => {
   const maintenant = new Date();
   const dateUtilisateur = new Date(dateEntree);
 
   if (isNaN(dateUtilisateur.getTime())) {
     return "";
   }
+
+  // Comparer uniquement les dates (sans heure)
   dateUtilisateur.setHours(0, 0, 0, 0);
   maintenant.setHours(0, 0, 0, 0);
 
-  if (dateUtilisateur < maintenant) {
-    return "";
+  if (past === true) {
+    // On accepte uniquement les dates passées ou égales
+    if (dateUtilisateur > maintenant) {
+      return "";
+    }
+  } else {
+    // On accepte uniquement les dates futures ou égales
+    if (dateUtilisateur < maintenant) {
+      return "";
+    }
   }
 
   return dateEntree;
+};
+
+export const ValidateDateHour = (dateEntree) => {
+  const d = new Date(dateEntree);
+  if (isNaN(d.getTime())) {
+    return null;
+  }
+  const maintenant = new Date();
+
+  if (d < maintenant) {
+    return "";
+  }
+
+  const year = d.getFullYear();
+  const month = (d.getMonth() + 1).toString().padStart(2, "0");
+  const day = d.getDate().toString().padStart(2, "0");
+  const hours = d.getHours().toString().padStart(2, "0");
+  const minutes = d.getMinutes().toString().padStart(2, "0");
+  const seconds = d.getSeconds().toString().padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
 export const handleToken = (token) => {
@@ -53,7 +84,10 @@ export const handleToken = (token) => {
     );
   }
 
-  // Détermination du dashboard
+  return determineDashboard(roles);
+};
+
+export const determineDashboard = (roles) => {
   let dashboard = "";
 
   if (roles.includes("ROLE_ADMIN")) {
