@@ -17,10 +17,16 @@ const DriverLayout = () => {
                 className='font-normal no-underline text-my-C mx-2'
             >Mes Infos</NavLink>
             <NavLink
+                to="itineraires"
+                style={({ isActive }) => isActive ? activelink : null}
+                className='font-normal no-underline text-my-C mx-2'
+            >Mes Itineraires</NavLink>
+            {/* <NavLink
                 to="additinerary"
                 style={({ isActive }) => isActive ? activelink : null}
                 className='font-normal no-underline text-my-C mx-2'
-            >Publiez un itineraire</NavLink>
+            >Publiez un itineraire</NavLink> */}
+
 
             <Outlet context={userData} />
         </>

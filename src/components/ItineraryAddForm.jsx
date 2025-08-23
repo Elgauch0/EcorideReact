@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Form, useLoaderData, useActionData, useNavigation } from "react-router";
+import {
+    Form,
+    useLoaderData,
+    useActionData,
+    useNavigation,
+    Link,
+} from "react-router-dom";
 import { getVehicle } from "../utils/loaders";
 import { ValidateDateHour, cleanSimpleText } from "../utils/functions";
 import { addItinerary } from "../utils/actions";
@@ -19,6 +25,7 @@ export const action = async ({ request }) => {
         departureCity: cleanSimpleText(formData.get("departureCity")),
         arrivalCity: cleanSimpleText(formData.get("arrivalCity")),
     };
+
     const hasEmpty =
         !itineraryData.vehiculeId ||
         !itineraryData.duration ||
@@ -35,27 +42,28 @@ export const action = async ({ request }) => {
     if (hasEmpty) {
         return {
             error: true,
-            message: "Veuillez bien remplir le formulaire",
+            message: "Veuillez bien remplir tous les champs du formulaire",
         };
     }
-    console.log(itineraryData);
+
     return await addItinerary(itineraryData);
-
-
 };
 
 export default function ItineraryAddForm() {
-
     const { error, result: vehicles = [], message } = useLoaderData();
+    const actionData = useActionData();
+    const { state } = useNavigation();
+    const submitting = state === "submitting";
+
     const [selectedVehicle, setSelectedVehicle] = useState({
         id: "",
         seats_available: 1,
     });
-    const actionData = useActionData();
-    const { state } = useNavigation();
-    const disabled = state === "submitting";
 
-
+    const handleVehicleChange = (e) => {
+        const veh = vehicles.find((v) => v.id === Number(e.target.value));
+        setSelectedVehicle(veh || { id: "", seats_available: 1 });
+    };
 
     if (error) {
         return (
@@ -65,40 +73,43 @@ export default function ItineraryAddForm() {
         );
     }
 
-    const handleVehicleChange = (e) => {
-        const veh = vehicles.find((v) => v.id === Number(e.target.value));
-        setSelectedVehicle(veh || { id: "", seats_available: 1 });
-    };
-
     return (
-        <div className="p-8">
+        <div className="p-8 max-w-xl mx-auto">
+            {/* Lien de retour */}
+            <Link
+                to="../itineraires"
+                className="inline-flex items-center text-my-A font-medium mb-4 hover:underline"
+            >
+                <span className="mr-2 text-2xl leading-none">←</span>
+                Revenir à mes itinéraires
+            </Link>
+
             <h1 className="text-3xl font-bold mb-6 text-gray-800">
-                Ajouter un Itinéraire
+                Ajouter un itinéraire
             </h1>
+
             {actionData && (
                 <div
-                    className={`mb-4 p-3 rounded ${actionData.error
-                        ? "text-red-600 bg-red-100"
-                        : "text-green-400 bg-green-100"
+                    className={`mb-6 p-4 rounded ${actionData.error
+                        ? "text-red-700 bg-red-100"
+                        : "text-green-700 bg-green-100"
                         }`}
                 >
                     {actionData.message}
                 </div>
-            )
-            }
+            )}
 
             <Form
                 method="post"
-                className="space-y-6 max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md"
+                className="space-y-6 bg-white p-6 rounded-lg shadow"
             >
                 {/* Sélection du véhicule */}
                 <div>
-
                     <label
                         htmlFor="vehiculeId"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Vehicule utilisé
+                        Véhicule utilisé
                     </label>
                     <select
                         id="vehiculeId"
@@ -119,7 +130,7 @@ export default function ItineraryAddForm() {
                     </select>
                 </div>
 
-                {/* Durée (minutes) */}
+                {/* Durée */}
                 <div>
                     <label
                         htmlFor="duration"
@@ -137,7 +148,7 @@ export default function ItineraryAddForm() {
                     />
                 </div>
 
-                {/* Prix avec signe euro */}
+                {/* Prix */}
                 <div className="relative">
                     <label
                         htmlFor="price"
@@ -167,7 +178,7 @@ export default function ItineraryAddForm() {
                         htmlFor="datetime"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Date et Heure
+                        Date et heure
                     </label>
                     <input
                         type="datetime-local"
@@ -178,13 +189,13 @@ export default function ItineraryAddForm() {
                     />
                 </div>
 
-                {/* Nombre de places proposées */}
+                {/* Places disponibles */}
                 <div>
                     <label
                         htmlFor="places"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Nombre de places proposées
+                        Places proposées
                     </label>
                     <input
                         type="number"
@@ -196,19 +207,19 @@ export default function ItineraryAddForm() {
                         defaultValue={1}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="mt-1 text-xs text-gray-500">
                         Maximum possible : {selectedVehicle.seats_available} place
                         {selectedVehicle.seats_available > 1 ? "s" : ""}
                     </p>
                 </div>
 
-                {/* Ville de Départ */}
+                {/* Ville de départ */}
                 <div>
                     <label
                         htmlFor="departureCity"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Ville de Départ
+                        Ville de départ
                     </label>
                     <input
                         type="text"
@@ -219,13 +230,13 @@ export default function ItineraryAddForm() {
                     />
                 </div>
 
-                {/* Ville d'Arrivée */}
+                {/* Ville d’arrivée */}
                 <div>
                     <label
                         htmlFor="arrivalCity"
                         className="block text-sm font-medium text-gray-700"
                     >
-                        Ville d'Arrivée
+                        Ville d'arrivée
                     </label>
                     <input
                         type="text"
@@ -236,14 +247,17 @@ export default function ItineraryAddForm() {
                     />
                 </div>
 
-                <button
-                    type="submit"
-                    className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-my-B hover:bg-my-D focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 disabled:opacity-70"
-                    disabled={disabled}
-                >
-                    {disabled ? 'patientez...' : 'Ajouter l’itinéraire'}
-                </button>
+                {/* Bouton d’envoi */}
+                <div className="text-right">
+                    <button
+                        type="submit"
+                        disabled={submitting}
+                        className="inline-flex items-center px-5 py-2 bg-my-B text-white rounded-md shadow hover:bg-my-D focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                    >
+                        {submitting ? "Patientez..." : "Ajouter l’itinéraire"}
+                    </button>
+                </div>
             </Form>
-        </div >
+        </div>
     );
 }

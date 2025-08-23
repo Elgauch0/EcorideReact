@@ -27,7 +27,7 @@ const Header = () => {
             <nav className={`${isOpen ? 'block' : 'hidden'} md:block`}>
                 <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 p-2">
                     {isLogged && roles.length > 0 && (
-                        <li><NavLink to={dashboard} className={({ isActive }) => isActive ? style : ""}>Dashboard</NavLink></li>
+                        <li><NavLink to={dashboard} className={({ isActive }) => isActive ? style : ""}>Mon dashboard</NavLink></li>
                     )}
                     <li><NavLink to="/covoiturage" className={({ isActive }) => isActive ? style : null}>Covoiturage</NavLink></li>
                     <li><NavLink to="/contact" className={({ isActive }) => isActive ? style : null}>Contact</NavLink></li>

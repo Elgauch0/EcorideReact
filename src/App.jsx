@@ -21,6 +21,7 @@ import DriverComponent from "./components/DriverComponent";
 import DriverLayout from "./Layouts/DriverLayout";
 import ItineraryAddForm, { action as itineraryAction, loader as itineraryLoader } from "./components/ItineraryAddForm";
 import AddVehicle, { action as addVehicleAction } from "./components/AddVehicle";
+import ItinerairesDriver, { loader as itinerariesDriverLoader } from "./components/Itineraires";
 
 
 
@@ -57,6 +58,8 @@ function App() {
         <Route path="driver" element={< DriverLayout />} loader={userLoader} >
           <Route index element={< DriverComponent />} />
           <Route path="additinerary" element={<ItineraryAddForm />} action={itineraryAction} loader={itineraryLoader} />
+          <Route path="itineraires" element={<ItinerairesDriver />} loader={itinerariesDriverLoader} />
+
         </Route>
 
 

@@ -197,3 +197,24 @@ export async function addItinerary(requestBody) {
     return { error: true, message: "erreur dans le catch" };
   }
 }
+
+export async function handleStatusItinerary(id, method, token) {
+  try {
+    const response = await fetch(apiURL + `/user/setitineraries/${id}`, {
+      method: method,
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      return { error: false, message: data };
+    }
+    return { error: true, message: data.message };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "Un problème de connexion est survenu." };
+  }
+}

@@ -72,8 +72,32 @@ export function getItinerariesDataFromSessionStorage() {
 
 export async function getVehicle() {
   const { token } = checkAuthorization();
+  console.log(token);
   try {
     const response = await fetch(userURL + "/getvehicle", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      console.error(response);
+      return { error: true, message: result.message };
+    }
+    return { error: false, result };
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: "erreur dans le catch" };
+  }
+}
+
+export async function getItinerariesDriver() {
+  const { token } = checkAuthorization();
+  try {
+    const response = await fetch(userURL + "/getitineraries", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
