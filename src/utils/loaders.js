@@ -71,8 +71,11 @@ export function getItinerariesDataFromSessionStorage() {
 }
 
 export async function getVehicle() {
-  const { token } = checkAuthorization();
-  console.log(token);
+  const auth = checkAuthorization();
+  if (auth.error) {
+    return auth;
+  }
+  const { token } = auth;
   try {
     const response = await fetch(userURL + "/getvehicle", {
       method: "GET",

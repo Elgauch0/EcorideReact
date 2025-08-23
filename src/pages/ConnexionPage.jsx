@@ -1,5 +1,8 @@
 import { Form, useNavigation, useSearchParams, Link, redirect } from "react-router";
 import { loginUser } from "../utils/actions";
+import { useAuthStore } from "../store/AuthStore";
+import { determineDashboard } from "../utils/functions";
+
 
 
 
@@ -13,7 +16,14 @@ export async function action({ request }) {
     }
     return redirect(response.dashboard);
 }
+export async function loader() {
+    const { roles, isLogged } = useAuthStore.getState();
+    if (!isLogged || !Array.isArray(roles)) {
+        return null;
+    }
+    throw redirect(determineDashboard(roles));
 
+}
 
 const Connexion = () => {
     const [searchParams] = useSearchParams();

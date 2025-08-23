@@ -10,7 +10,7 @@ import { action as actionForm } from "./components/CarpoolingForm";
 import ErrorElement from "./components/ErrorElement";
 import Notfound from "./components/Notfound";
 import Itineraries, { loader as itinerariesLoader } from "./pages/ItinerariesPage";
-import Connexion, { action as loginAction } from "./pages/ConnexionPage";
+import Connexion, { action as loginAction, loader as loaderConnexion } from "./pages/ConnexionPage";
 import Registration from "./pages/RegistrationPage";
 import { action as registrationAction } from './components/UserRegistrationForm'
 import LayoutProtection, { loader as loaderProtection } from "./Layouts/LayoutProtection";
@@ -25,6 +25,7 @@ import ItinerairesDriver, { loader as itinerariesDriverLoader } from "./componen
 
 
 
+
 function App() {
   let router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<PrimeLayout />} errorElement={<ErrorElement />}>
@@ -32,7 +33,7 @@ function App() {
       <Route path="covoiturage" element={<CarpoolingForm />} action={actionForm} />
       <Route path="contact" element={<h1>contact page</h1>} />
 
-      <Route path="connexion" element={<Connexion />} action={loginAction} />
+      <Route path="connexion" element={<Connexion />} action={loginAction} loader={loaderConnexion} />
       <Route path="register" element={<Registration />} action={registrationAction} />
       <Route path="itineraries" element={<Itineraries />} loader={itinerariesLoader} />
       <Route path="detail" element={<DetailComponent />} loader={detailLoader} action={actionDetail} />
@@ -55,7 +56,7 @@ function App() {
         {/* Driver Page -------------------------------------------------------------------------------------------------------------------------- */}
 
 
-        <Route path="driver" element={< DriverLayout />} loader={userLoader} >
+        <Route path="driver" element={<DriverLayout />} loader={userLoader} >
           <Route index element={< DriverComponent />} />
           <Route path="additinerary" element={<ItineraryAddForm />} action={itineraryAction} loader={itineraryLoader} />
           <Route path="itineraires" element={<ItinerairesDriver />} loader={itinerariesDriverLoader} />
@@ -94,9 +95,12 @@ function App() {
     </Route >
 
 
-  ), {
-    hydrateFallbackElement: <div>Chargement...</div>
-  })
+  ),
+    {
+      // Add the hydrateFallbackElement here
+      hydrateFallbackElement: <h1>Loading...</h1>,
+    }
+  )
 
 
   return (
