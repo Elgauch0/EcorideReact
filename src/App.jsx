@@ -22,6 +22,7 @@ import DriverLayout from "./Layouts/DriverLayout";
 import ItineraryAddForm, { action as itineraryAction, loader as itineraryLoader } from "./components/ItineraryAddForm";
 import AddVehicle, { action as addVehicleAction } from "./components/AddVehicle";
 import ItinerairesDriver, { loader as itinerariesDriverLoader } from "./components/Itineraires";
+import AddImgProfil from "./components/AddImgProfil";
 
 
 
@@ -43,14 +44,14 @@ function App() {
 
 
 
+
       <Route element={< LayoutProtection />} loader={loaderProtection} shouldRevalidate={() => false}>
+
 
 
         {/* User Page -------------------------------------------------------------------------------------------------------------------------- */}
         <Route path="user" element={<UserComponent />} loader={userLoader} />
         <Route path="addVehicle" element={<AddVehicle />} action={addVehicleAction} />
-
-
 
 
         {/* Driver Page -------------------------------------------------------------------------------------------------------------------------- */}

@@ -1,4 +1,6 @@
 import { useOutletContext, Link } from "react-router";
+import ImgUserComponent from "./ImgUserComponent";
+import AddImgProfil from "./AddImgProfil";
 
 
 
@@ -12,7 +14,7 @@ const DriverComponent = () => {
         <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
 
             <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-10 space-y-8">
-
+                <ImgUserComponent imageUrl={userData.userImage} />
                 {/* 🚗 Section de bienvenue pour le conducteur */}
                 <div className="text-center">
                     <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
@@ -63,6 +65,7 @@ const DriverComponent = () => {
                             Rajouter Un vehicle
                         </Link>
                     </div>
+                    <AddImgProfil token={userData.token} />
                 </div>
 
 

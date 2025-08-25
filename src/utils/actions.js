@@ -218,3 +218,25 @@ export async function handleStatusItinerary(id, method, token) {
     return { error: true, message: "Un problème de connexion est survenu." };
   }
 }
+
+export async function addPicture(picture, token) {
+  try {
+    const response = await fetch(apiURL + "/user/addImg", {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: picture,
+    });
+    const data = await response.json();
+
+    if (response.ok) {
+      return { error: false, imageUrl: data.imageUrl };
+    }
+    return { error: true, message: data.message };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "Erreur réseau ou serveur." };
+  }
+}
