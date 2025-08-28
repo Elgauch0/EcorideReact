@@ -16,7 +16,7 @@ const ImgUserComponent = ({ imageUrl }) => {
             <img
                 src={fullImageUrl}
                 alt="Photo de profil"
-                className="w-2/3 h-24 rounded-full object-cover border-2 border-gray-300"
+                className="w-2/3 h-28 rounded-full object-cover border-2 border-gray-300"
             />
         </div >
     )

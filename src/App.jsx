@@ -22,7 +22,9 @@ import DriverLayout from "./Layouts/DriverLayout";
 import ItineraryAddForm, { action as itineraryAction, loader as itineraryLoader } from "./components/ItineraryAddForm";
 import AddVehicle, { action as addVehicleAction } from "./components/AddVehicle";
 import ItinerairesDriver, { loader as itinerariesDriverLoader } from "./components/Itineraires";
-import AddImgProfil from "./components/AddImgProfil";
+import Reservations, { loader as reservationLoader } from "./components/Reservations";
+import AvisComponent, { action as avisComponentAction } from "./components/AvisComponent";
+
 
 
 
@@ -52,7 +54,8 @@ function App() {
         {/* User Page -------------------------------------------------------------------------------------------------------------------------- */}
         <Route path="user" element={<UserComponent />} loader={userLoader} />
         <Route path="addVehicle" element={<AddVehicle />} action={addVehicleAction} />
-
+        <Route path="reservations" element={< Reservations />} loader={reservationLoader} />
+        <Route path="avis" element={<AvisComponent />} action={avisComponentAction} />
 
         {/* Driver Page -------------------------------------------------------------------------------------------------------------------------- */}
 

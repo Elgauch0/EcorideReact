@@ -240,3 +240,37 @@ export async function addPicture(picture, token) {
     return { error: true, message: "Erreur réseau ou serveur." };
   }
 }
+
+export async function addAvis(requestBody, token) {
+  try {
+    const response = await fetch(`${apiURL}/user/addcomment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        error: true,
+        message: data?.message || "Erreur inconnue du serveur",
+      };
+    }
+
+    return {
+      error: false,
+      message: "Avis envoyé avec succès",
+    };
+  } catch (err) {
+    console.error("Erreur lors de l'envoi de l'avis :", err);
+    return {
+      error: true,
+      message: "Une erreur est survenue. Veuillez réessayer plus tard.",
+    };
+  }
+}

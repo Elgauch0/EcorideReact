@@ -37,9 +37,7 @@ const AddImgProfil = ({ token }) => {
 
         setIsLoading(true);
         const response = await addPicture(formData, token);
-        console.log(response);
         setResponse(response);
-
         setIsLoading(false);
 
 

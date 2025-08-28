@@ -97,6 +97,12 @@ const UserComponent = () => {
                     >
                         Devenir Driver
                     </Link>
+                    <Link
+                        to="/reservations"
+                        className="px-6 py-3 bg-my-C text-white font-semibold rounded-lg shadow-md hover:bg-my-C-dark transition duration-300 text-center"
+                    >
+                        Voir mes reservations
+                    </Link>
                 </div>
 
                 {/* Composant d’upload */}

@@ -119,3 +119,24 @@ export async function getItinerariesDriver() {
     return { error: true, message: "erreur dans le catch" };
   }
 }
+
+export async function getReservations(token) {
+  try {
+    const response = await fetch(userURL + "/getReservation", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { error: true, message: data.message };
+    }
+    return { error: false, data };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: data.message };
+  }
+}

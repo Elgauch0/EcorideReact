@@ -68,7 +68,7 @@ const Header = () => {
                                 <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-all duration-300">
                                     <span className="text-2xl">🚗</span>
                                 </div>
-                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
+                                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></div>
                             </div>
                             <div>
                                 <span className={`text-2xl font-bold tracking-tight ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
@@ -273,7 +273,7 @@ const Header = () => {
                                         </div>
                                         <button
                                             onClick={handleLogout}
-                                            className=" w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center space-x-2"
+                                            className="w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center space-x-2"
                                         >
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
