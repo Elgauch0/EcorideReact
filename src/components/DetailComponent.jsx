@@ -120,10 +120,13 @@ export default function DetailComponent() {
                             {vehicule.isGreen ? 'Oui' : 'Non'}
                         </p>
                         {vehicule.driver && (
-                            <p>
-                                <span className="font-medium">Conducteur :</span>{' '}
-                                {vehicule.driver.firstName} {vehicule.driver.lastName}
-                            </p>
+                            <>
+                                <p>
+                                    <span className="font-medium">Conducteur :</span>{' '}
+                                    {vehicule.driver.firstName} {vehicule.driver.lastName}
+                                </p>
+                                <p>note : {vehicule.averageRating ? vehicule.averageRating : "aucune note donné encore"}</p>
+                            </>
                         )}
                     </>
                 )}

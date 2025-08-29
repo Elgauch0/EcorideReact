@@ -3,6 +3,7 @@ import { Outlet, useLoaderData, NavLink } from "react-router";
 const DriverLayout = () => {
     const userData = useLoaderData();
 
+
     const navigationItems = [
         {
             to: ".",

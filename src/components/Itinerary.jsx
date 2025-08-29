@@ -49,10 +49,16 @@ export default function Itinerary({ itinerary }) {
                     <ul className="list-disc list-inside space-y-1">
                         <li>Écologique : {vehicule.isGreen ? 'Oui' : 'Non'}</li>
                         {vehicule.driver && (
-                            <li>
-                                Conducteur : {vehicule.driver.firstName}{' '}
-                                {vehicule.driver.lastName}
-                            </li>
+                            <>
+                                <li>
+                                    Conducteur : {vehicule.driver.firstName}{' '}
+                                    {vehicule.driver.lastName}
+                                </li>
+                                <li>
+                                    note  : {vehicule.averageRating ? vehicule.averageRating : 'pas disponible'}
+                                </li>
+                            </>
+
                         )}
                     </ul>
                 </div>

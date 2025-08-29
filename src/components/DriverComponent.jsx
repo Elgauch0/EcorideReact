@@ -58,6 +58,13 @@ const DriverComponent = () => {
                                 {userData.adress}
                             </p>
                         </div>
+                        {/* 🏠 Adresse */}
+                        <div className="col-span-full bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
+                            <p className="text-sm font-medium text-gray-500">Votre note :</p>
+                            <p className="mt-1 text-lg font-semibold text-gray-900">
+                                {userData.averageRating ? userData.averageRating + "/5" : "aucun rating pour le moment "}
+                            </p>
+                        </div>
                         <Link
                             to="/addVehicle"
                             className="px-6 py-3 bg-my-C text-white font-semibold rounded-lg shadow-md hover:bg-my-C-dark transition duration-300 text-center"
