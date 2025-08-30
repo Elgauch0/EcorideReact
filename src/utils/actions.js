@@ -190,7 +190,6 @@ export async function addItinerary(requestBody) {
       console.error(response);
       return { error: true, message: data.message || "Erreur inconnue" };
     }
-    console.log(data);
     return { error: false, message: "itineraire publié" };
   } catch (err) {
     console.error(err);

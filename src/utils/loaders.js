@@ -23,7 +23,6 @@ export async function getUserData(token) {
         message: response.message || "réponse du serveur not ok ",
       };
     }
-
     return {
       error: false,
       data,

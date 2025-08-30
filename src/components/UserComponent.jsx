@@ -2,7 +2,6 @@ import { Link, redirect, useLoaderData } from "react-router";
 import { getUserData } from "../utils/loaders";
 import { checkAuthorization } from "../utils/functions.js";
 import AddImgProfil from "../components/AddImgProfil";
-import AvatarImg from '../assets/defaultAvatar.webp'
 import ImgUserComponent from "./ImgUserComponent.jsx";
 
 export const loader = async ({ request }) => {
@@ -30,16 +29,8 @@ const UserComponent = () => {
         adress,
         userImage,
         token,
+        Credits
     } = useLoaderData();
-
-
-
-
-
-
-
-
-
 
 
     return (
@@ -79,6 +70,10 @@ const UserComponent = () => {
                         <div className="col-span-full bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
                             <p className="text-sm font-medium text-gray-500">Adresse</p>
                             <p className="mt-1 text-lg font-semibold text-gray-900">{adress}</p>
+                        </div>
+                        <div className="col-span-full bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
+                            <p className="text-sm font-medium text-gray-500">Mon credits :</p>
+                            <p className="mt-1 text-lg font-semibold text-gray-900">{Credits}</p>
                         </div>
                     </div>
                 </div>
