@@ -139,3 +139,25 @@ export async function getReservations(token) {
     return { error: true, message: data.message };
   }
 }
+
+export async function getAvisAdmin(token) {
+  try {
+    const response = await fetch(apiURL + "/admin/avis", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      return { error: true, message: data.message };
+    }
+    return { error: false, data };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "Server error 500" };
+  }
+}

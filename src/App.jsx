@@ -24,6 +24,7 @@ import AddVehicle, { action as addVehicleAction } from "./components/AddVehicle"
 import ItinerairesDriver, { loader as itinerariesDriverLoader } from "./components/Itineraires";
 import Reservations, { loader as reservationLoader } from "./components/Reservations";
 import AvisComponent, { action as avisComponentAction } from "./components/AvisComponent";
+import ManagerComponent, { loader as loaderManager } from "./components/ManagerComponent";
 
 
 
@@ -73,7 +74,7 @@ function App() {
 
 
 
-        <Route path="manager" element={<h1>Manager Page</h1>} />
+        <Route path="manager" element={<ManagerComponent />} loader={loaderManager} />
 
 
 

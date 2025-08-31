@@ -273,3 +273,24 @@ export async function addAvis(requestBody, token) {
     };
   }
 }
+export async function editAvis(commentId, userEmail, isValid, token) {
+  try {
+    const response = await fetch(apiURL + "/admin/avis", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ commentId, userEmail, isValid }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { error: true, message: data.message || "response erreur" };
+    }
+    return { error: false, message: data.message || "commentaire validé" };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "500 erreur dans le fetch" };
+  }
+}
