@@ -161,3 +161,43 @@ export async function getAvisAdmin(token) {
     return { error: true, message: "Server error 500" };
   }
 }
+
+export async function getItinerariesData(token) {
+  try {
+    const response = await fetch(apiURL + "/admin/getdataitineraries", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { error: true, message: data.message || "erreur dans la reponse" };
+    }
+    return { error: false, data };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "erreur 500" };
+  }
+}
+
+export async function getBudgetData(token) {
+  try {
+    const response = await fetch(apiURL + "/admin/getdataCredits", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { error: true, message: data.message || "erreur dans la reponse" };
+    }
+    return { error: false, data };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "erreur 500" };
+  }
+}

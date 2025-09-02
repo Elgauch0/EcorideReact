@@ -2,7 +2,8 @@ import {
   createBrowserRouter,
   RouterProvider,
   createRoutesFromElements,
-  Route
+  Route,
+  Navigate
 } from "react-router";
 import PrimeLayout from "./Layouts/PrimeLayout";
 import Home from "./pages/HomePage";
@@ -25,6 +26,13 @@ import ItinerairesDriver, { loader as itinerariesDriverLoader } from "./componen
 import Reservations, { loader as reservationLoader } from "./components/Reservations";
 import AvisComponent, { action as avisComponentAction } from "./components/AvisComponent";
 import ManagerComponent, { loader as loaderManager } from "./components/ManagerComponent";
+import AdminDashboard, { action as adminActionAddEmploye } from "./components/AdminDashboard";
+import AdminLayout from "./Layouts/AdminLayout";
+import AdminSearchUser, { action as actionAdminSearchUser } from "./components/AdminSearchUser";
+import AdminBienvenue from "./components/AdminBienvenue";
+import AdminItinerariesStats, { loader as itineraryStatsLoader } from "./components/AdminItinerariesStats";
+import AdminbudgetStats, { loader as budgetStatLoader } from "./components/AdminbudgetStats";
+import StatsComponentLayout from "./Layouts/StatsComponentLayout";
 
 
 
@@ -82,8 +90,16 @@ function App() {
         {/* Admin Page -------------------------------------------------------------------------------------------------------------------------- */}
 
 
-
-        <Route path="admin" element={<h1>Admin Page</h1>} />
+        <Route path="admin" element={< AdminLayout />} >
+          <Route index element={<Navigate to="stats" replace />} />
+          <Route path="stats" element={< StatsComponentLayout />} >
+            <Route index element={< AdminBienvenue />} />
+            <Route path='itineraries' element={<AdminItinerariesStats />} loader={itineraryStatsLoader} />
+            <Route path='budget' element={<AdminbudgetStats />} loader={budgetStatLoader} />
+          </Route>
+          <Route path="dashboard" element={<AdminDashboard />} action={adminActionAddEmploye} />
+          <Route path="users" element={<AdminSearchUser />} action={actionAdminSearchUser} />
+        </Route>
 
 
 

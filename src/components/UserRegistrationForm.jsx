@@ -1,4 +1,4 @@
-import { Form, redirect, useActionData, useNavigation, Link } from "react-router";
+import { Form, redirect, useActionData, useNavigation } from "react-router";
 import { cleanSimpleText } from "../utils/functions";
 import { createUser } from "../utils/actions";
 
@@ -110,12 +110,7 @@ const UserRegistrationForm = () => {
                     {isSubmitting ? 'creation  en cours' : 'Créer le compte'}
                 </button>
             </Form>
-            <Link
-                to="/connexion"
-                className="block mx-auto text-my-A hover:underline mt-4 text-center"
-            >
-                se connecter
-            </Link>
+
         </>
     );
 };

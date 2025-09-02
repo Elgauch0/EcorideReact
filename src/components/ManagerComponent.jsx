@@ -75,7 +75,7 @@ const ManagerComponent = () => {
     if (!data || data.length === 0) {
         return (
             <div className="text-gray-500 text-center p-8">
-                Aucun commentaire à valider pour le moment.
+                Aucun Action  à valider pour le moment.
             </div>
         );
     }

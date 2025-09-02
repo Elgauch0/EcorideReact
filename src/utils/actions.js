@@ -294,3 +294,97 @@ export async function editAvis(commentId, userEmail, isValid, token) {
     return { error: true, message: "500 erreur dans le fetch" };
   }
 }
+
+export async function createEmploye(requestBody, token) {
+  try {
+    const response = await fetch(`${apiURL}/admin/adduser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error(`Backend Error (${response?.status}):`, data);
+      return {
+        error: true,
+        message:
+          data.message ||
+          `Une erreur est survenue (statut: ${response?.status}).`,
+      };
+    }
+
+    return {
+      error: false,
+      message:
+        "Inscription  complète ! l employé peut se connectez avec son propre compte.",
+    };
+  } catch (err) {
+    console.error("Erreur de connexion dans createUser:", err);
+    return {
+      error: true,
+      message:
+        "Impossible de se connecter au serveur. Veuillez vérifier votre connexion internet.",
+    };
+  }
+}
+
+export async function searchUser(email, token) {
+  try {
+    const response = await fetch(
+      apiURL + `/admin/getuser?email=${encodeURIComponent(email)}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    if (!response.ok) {
+      return {
+        error: true,
+        message: data.message || "Erreur dans la response du serveur ",
+      };
+    }
+
+    return { error: false, data };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "erreur 500" };
+  }
+}
+
+export async function deleteUser(email, token) {
+  try {
+    const response = await fetch(
+      apiURL + `/admin/deleteuser?email=${encodeURIComponent(email)}`,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      const data = await response.json();
+
+      return {
+        error: true,
+        message: data.message || "erreur dans la response ",
+      };
+    }
+    return { error: false, message: "utilisateur supprimé avec succes !" };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "erreur 500" };
+  }
+}
