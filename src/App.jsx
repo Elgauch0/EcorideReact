@@ -33,6 +33,7 @@ import AdminBienvenue from "./components/AdminBienvenue";
 import AdminItinerariesStats, { loader as itineraryStatsLoader } from "./components/AdminItinerariesStats";
 import AdminbudgetStats, { loader as budgetStatLoader } from "./components/AdminbudgetStats";
 import StatsComponentLayout from "./Layouts/StatsComponentLayout";
+import ContactPage, { action as formDataAction } from "./components/ContactPage";
 
 
 
@@ -43,7 +44,7 @@ function App() {
     <Route path="/" element={<PrimeLayout />} errorElement={<ErrorElement />}>
       <Route index element={< Home />} action={actionForm} />
       <Route path="covoiturage" element={<CarpoolingForm />} action={actionForm} />
-      <Route path="contact" element={<h1>contact page</h1>} />
+      <Route path="contact" element={< ContactPage />} action={formDataAction} />
 
       <Route path="connexion" element={<Connexion />} action={loginAction} loader={loaderConnexion} />
       <Route path="register" element={<Registration />} action={registrationAction} />

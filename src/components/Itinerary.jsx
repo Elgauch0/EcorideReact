@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 
 export default function Itinerary({ itinerary }) {
     const { id, datetime, price, places, duration, vehicule } = itinerary
+    console.log(vehicule);
 
 
 
@@ -55,7 +56,7 @@ export default function Itinerary({ itinerary }) {
                                     {vehicule.driver.lastName}
                                 </li>
                                 <li>
-                                    note  : {vehicule.averageRating ? vehicule.averageRating : 'pas disponible'}
+                                    note  : {vehicule.driver.averageRating ? vehicule.driver.averageRating + '/5' : 'pas disponible'}
                                 </li>
                             </>
 

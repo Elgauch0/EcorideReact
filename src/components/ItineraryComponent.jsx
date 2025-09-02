@@ -1,7 +1,7 @@
 // ItineraryComponent.jsx
 
 
-export default function ItineraryComponent({ itineraire, handleItinerary, deleteItinerary }) {
+export default function ItineraryComponent({ itineraire, handleItinerary }) {
 
     return (
         <div className="bg-white rounded-lg shadow-md p-8 max-w-xl mx-auto space-y-6">

@@ -388,3 +388,30 @@ export async function deleteUser(email, token) {
     return { error: true, message: "erreur 500" };
   }
 }
+
+export async function sendEmails({ email, content }) {
+  try {
+    const response = await fetch(apiURL + "/guest/email", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({ email, content }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return { error: true, message: data.message };
+    }
+
+    return {
+      error: false,
+      message: data?.message || "email envoyé avec succes ",
+    };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "Erreur 500" };
+  }
+}
