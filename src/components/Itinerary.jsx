@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 
 export default function Itinerary({ itinerary }) {
     const { id, datetime, price, places, duration, vehicule } = itinerary
-    console.log(vehicule);
+
 
 
 

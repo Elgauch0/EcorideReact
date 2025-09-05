@@ -5,6 +5,7 @@ import Footer from "./Footer"
 
 export default function ErrorElement() {
     const error = useRouteError()
+    console.error(error);
     const navigate = useNavigate()
 
     // Récupère message et code d’erreur (status peut venir d’un Response ou d’une Error custom)

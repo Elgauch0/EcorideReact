@@ -415,3 +415,77 @@ export async function sendEmails({ email, content }) {
     return { error: true, message: "Erreur 500" };
   }
 }
+
+export async function hundleValidateAvisPublic(id, token) {
+  try {
+    const res = await fetch(apiURL + `/admin/avispublic/${id}`, {
+      method: "PATCH",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+    if (!res.ok)
+      return {
+        error: true,
+        message: data?.message || "erreur dans la response",
+      };
+
+    return { error: false, message: "commentaire validé" };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "erreur 500" };
+  }
+}
+
+export async function hundleDeleteAvisPublic(id, token) {
+  try {
+    const res = await fetch(apiURL + `/admin/avispublic/${id}`, {
+      method: "DELETE",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return {
+        error: true,
+        message: data?.message || "erreur dans la response",
+      };
+    }
+
+    return { error: false, message: "commentaire supprimé avec succes " };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "erreur 500" };
+  }
+}
+
+export async function hundlePublicAvis(requestBody) {
+  try {
+    const response = await fetch(apiURL + "/guest/avis", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+    if (!response.ok) {
+      console.error(response);
+      return { error: true, message: "erreur dans la response" };
+    }
+    return {
+      error: false,
+      message:
+        "votre commentaire a bien été ajouté il sera publié apres la validation.",
+    };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "erreur 500" };
+  }
+}

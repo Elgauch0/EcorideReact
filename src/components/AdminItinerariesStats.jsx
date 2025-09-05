@@ -2,7 +2,7 @@
 import { redirect, useLoaderData } from "react-router-dom";
 import { checkAuthorization } from "../utils/functions"
 import { getItinerariesData } from "../utils/loaders";
-import { PieChart } from 'react-minimal-pie-chart';
+
 
 
 export const loader = async () => {
@@ -16,8 +16,7 @@ export const loader = async () => {
 
 const AdminItinerariesStats = () => {
     const data = useLoaderData();
-    console.log(data);
-    // Trouvez la valeur maximale pour normaliser la hauteur des barres
+
     const maxCount = Math.max(...data.data.map(item => item.count));
 
     return (

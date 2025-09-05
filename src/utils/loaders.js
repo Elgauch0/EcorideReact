@@ -28,7 +28,7 @@ export async function getUserData(token) {
       data,
     };
   } catch (err) {
-    return { error: true, message: response.message || "erreur 500 " };
+    return { error: true, message: "erreur 500 " };
   }
 }
 /**
@@ -199,5 +199,44 @@ export async function getBudgetData(token) {
   } catch (err) {
     console.error(err);
     return { error: true, message: "erreur 500" };
+  }
+}
+
+export async function getAvisPublicAdmin(token) {
+  try {
+    const response = await fetch(apiURL + "/admin/avispublic", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      return { error: true, message: data.message };
+    }
+    return { error: false, data };
+  } catch (err) {
+    console.error(err);
+    return { error: true, message: "Server error 500" };
+  }
+}
+
+export async function getAvisPublicUSers() {
+  try {
+    const response = await fetch(apiURL + `/guest/avis`);
+    const data = await response.json();
+    if (!response.ok) {
+      return {
+        error: true,
+        message: data?.message || "erreur dans la réponse",
+      };
+    }
+    return { error: false, data };
+  } catch (error) {
+    console.error(error);
+    return { error: true, message: "Erreur 500" };
   }
 }

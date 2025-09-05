@@ -34,6 +34,9 @@ import AdminItinerariesStats, { loader as itineraryStatsLoader } from "./compone
 import AdminbudgetStats, { loader as budgetStatLoader } from "./components/AdminbudgetStats";
 import StatsComponentLayout from "./Layouts/StatsComponentLayout";
 import ContactPage, { action as formDataAction } from "./components/ContactPage";
+import EmployeLayout from "./Layouts/EmployeLayout";
+import EmployepublicAvis, { loader as publicAvisLoader } from "./components/EmployepublicAvis";
+import PublicAvis, { action as publicActionAvis } from "./components/PublicAvis";
 
 
 
@@ -45,6 +48,7 @@ function App() {
       <Route index element={< Home />} action={actionForm} />
       <Route path="covoiturage" element={<CarpoolingForm />} action={actionForm} />
       <Route path="contact" element={< ContactPage />} action={formDataAction} />
+      <Route path="publicavis" element={<PublicAvis />} action={publicActionAvis} />
 
       <Route path="connexion" element={<Connexion />} action={loginAction} loader={loaderConnexion} />
       <Route path="register" element={<Registration />} action={registrationAction} />
@@ -82,8 +86,11 @@ function App() {
         {/* Manager Page -------------------------------------------------------------------------------------------------------------------------- */}
 
 
-
-        <Route path="manager" element={<ManagerComponent />} loader={loaderManager} />
+        <Route path="manager" element={<EmployeLayout />} >
+          <Route index element={< AdminBienvenue />} />
+          <Route path="utilisateurs" element={<ManagerComponent />} loader={loaderManager} />
+          <Route path="public" element={<EmployepublicAvis />} loader={publicAvisLoader} />
+        </Route>
 
 
 

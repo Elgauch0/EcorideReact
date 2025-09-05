@@ -79,7 +79,7 @@ const UserComponent = () => {
                 </div>
 
                 {/* 🚗 Boutons d’action */}
-                <div className="flex flex-col md:flex-row md:justify-center md:space-x-6 space-y-4 md:space-y-0 mt-6">
+                <nav className="flex flex-col md:flex-row md:justify-center md:space-x-6 space-y-4 md:space-y-0 mt-6">
                     <Link
                         to="/covoiturage"
                         className="px-6 py-3 bg-my-C text-white font-semibold rounded-lg shadow-md hover:bg-my-C-dark transition duration-300 text-center"
@@ -98,7 +98,7 @@ const UserComponent = () => {
                     >
                         Voir mes reservations
                     </Link>
-                </div>
+                </nav>
 
                 {/* Composant d’upload */}
                 <AddImgProfil token={token} />

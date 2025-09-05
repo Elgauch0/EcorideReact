@@ -196,7 +196,7 @@ const Header = () => {
                     </div>
                 </div>
 
-                {/* Menu mobile amélioré */}
+
                 <div className={`lg:hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
                     } overflow-hidden`}>
                     <div className="bg-white/95 backdrop-blur-md border-t border-gray-200/20 shadow-xl">
