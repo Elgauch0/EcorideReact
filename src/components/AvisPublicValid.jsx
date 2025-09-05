@@ -48,8 +48,11 @@ const AvisPublicValide = () => {
                     </li>
                 ))}
             </ul>
-            <Link to="publicavis">
-                laissez nous un avis
+            <Link
+                to="publicavis"
+                className="inline-block my-2 px-4 py-2 bg-my-B text-white rounded-md shadow hover:bg-my-C transition duration-200"
+            >
+                Laissez-nous un avis
             </Link>
         </section>
     );
