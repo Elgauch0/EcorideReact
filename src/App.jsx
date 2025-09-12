@@ -42,6 +42,7 @@ import PublicAvis, { action as publicActionAvis } from "./components/PublicAvis"
 
 
 
+
 function App() {
   let router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<PrimeLayout />} errorElement={<ErrorElement />}>
@@ -61,6 +62,7 @@ function App() {
 
 
 
+
       <Route element={< LayoutProtection />} loader={loaderProtection} shouldRevalidate={() => false}>
 
 
@@ -70,6 +72,8 @@ function App() {
         <Route path="addVehicle" element={<AddVehicle />} action={addVehicleAction} />
         <Route path="reservations" element={< Reservations />} loader={reservationLoader} />
         <Route path="avis" element={<AvisComponent />} action={avisComponentAction} />
+
+
 
         {/* Driver Page -------------------------------------------------------------------------------------------------------------------------- */}
 
