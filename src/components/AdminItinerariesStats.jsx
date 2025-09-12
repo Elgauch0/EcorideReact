@@ -20,7 +20,7 @@ const AdminItinerariesStats = () => {
     const maxCount = Math.max(...data.data.map(item => item.count));
 
     return (
-        <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+        <section style={{ padding: '20px', fontFamily: 'sans-serif' }}>
             <h2 style={{ textAlign: 'center' }}>Statistiques des Itinéraires Par Jour</h2>
             <div style={{
                 display: 'flex',
@@ -33,7 +33,7 @@ const AdminItinerariesStats = () => {
                     <div
                         key={index}
                         style={{
-                            flex: 1, // Pour que les barres aient la même largeur
+                            flex: 1,
                             height: `${(item.count / maxCount) * 100}%`,
                             backgroundColor: '#4a90e2',
                             margin: '0 5px',
@@ -51,7 +51,7 @@ const AdminItinerariesStats = () => {
                     </div>
                 ))}
             </div>
-            {/* Légende de l'axe X (dates) */}
+
             <div style={{ display: 'flex', marginTop: '10px' }}>
                 {data.data.map((item, index) => (
                     <div
@@ -67,7 +67,7 @@ const AdminItinerariesStats = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </section>
     );
 };
 

@@ -52,7 +52,7 @@ const AddVehicle = () => {
     const disabled = navigation.state === "submitting";
     return (
 
-        <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
+        <section className="mt-6 bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 Ajoutez une Voiture
             </h2>
@@ -198,7 +198,7 @@ const AddVehicle = () => {
                     Enregistrer
                 </button>
             </Form>
-        </div>
+        </section>
 
     )
 }

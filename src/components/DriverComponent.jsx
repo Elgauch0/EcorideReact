@@ -11,7 +11,7 @@ const DriverComponent = () => {
     const userData = useOutletContext();
 
     return (
-        <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <section className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
 
             <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-10 space-y-8">
                 <ImgUserComponent imageUrl={userData.userImage} />
@@ -84,7 +84,7 @@ const DriverComponent = () => {
 
 
             </div>
-        </div>
+        </section>
     );
 }
 

@@ -19,7 +19,7 @@ const ContactPage = () => {
     const { error, message } = actionData || {};
 
     return (
-        <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
+        <section className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
             <h2 className="text-2xl font-bold mb-6 text-center">Contactez-nous</h2>
 
             {message && (
@@ -64,7 +64,7 @@ const ContactPage = () => {
                     Envoyer
                 </button>
             </Form>
-        </div>
+        </section>
     );
 };
 

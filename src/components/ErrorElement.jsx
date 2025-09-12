@@ -17,7 +17,7 @@ export default function ErrorElement() {
         <>
             <Header />
 
-            <main className="min-h-[70vh] flex flex-col items-center justify-center bg-gray-50 px-4">
+            <section className="min-h-[70vh] flex flex-col items-center justify-center bg-gray-50 px-4">
                 <div className="bg-white p-8 rounded-xl shadow-md max-w-md w-full text-center">
                     <h1 className="text-3xl font-bold text-red-600 mb-4">
                         Oups ! Quelque chose a mal tourné
@@ -44,7 +44,7 @@ export default function ErrorElement() {
                         </button>
                     </div>
                 </div>
-            </main>
+            </section>
 
             <Footer />
         </>

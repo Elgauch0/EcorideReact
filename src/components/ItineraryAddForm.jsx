@@ -74,7 +74,7 @@ export default function ItineraryAddForm() {
     }
 
     return (
-        <div className="p-8 max-w-xl mx-auto">
+        <section className="p-8 max-w-xl mx-auto">
             {/* Lien de retour */}
             <Link
                 to="../itineraires"
@@ -258,6 +258,6 @@ export default function ItineraryAddForm() {
                     </button>
                 </div>
             </Form>
-        </div>
+        </section>
     );
 }
