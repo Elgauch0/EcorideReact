@@ -47,7 +47,7 @@ export default function Itineraires() {
 
 
     return (
-        <div className="p-8 max-w-4xl mx-auto">
+        <section className="p-8 max-w-4xl mx-auto">
             <div className="mb-8 flex items-center justify-between">
                 <h1 className="text-3xl font-extrabold text-gray-800">Mes itinéraires</h1>
                 <Link
@@ -67,6 +67,6 @@ export default function Itineraires() {
                     ))}
                 </div>
             )}
-        </div>
+        </section>
     );
 }

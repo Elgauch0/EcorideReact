@@ -34,7 +34,7 @@ const Connexion = () => {
     const isSubmitting = state === 'submitting';
 
     return (
-        <>
+        <section>
             {message && (
                 <h2
                     className="text-green-600 font-semibold mt-4 text-center"
@@ -96,7 +96,7 @@ const Connexion = () => {
                     Créer un compte
                 </Link>
             </div>
-        </>
+        </section>
     );
 };
 

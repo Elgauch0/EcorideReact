@@ -47,7 +47,7 @@ const AdminDashboard = () => {
 
 
     return (
-        <>
+        <section>
             {res && (
                 <h3
                     className={`p-2 rounded-md ${res.error ? 'bg-red-100 text-red-700' : 'bg-green-200 text-green-800'
@@ -64,7 +64,7 @@ const AdminDashboard = () => {
                 className="block mx-auto text-my-A hover:underline mt-4 text-center"
             >chercher un user
             </Link>
-        </>
+        </section>
     )
 }
 

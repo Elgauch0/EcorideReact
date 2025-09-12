@@ -52,7 +52,7 @@ const CarpoolingForm = () => {
     }, []);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4">
+        <section className="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4">
             <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-6">
                 {/* Titres principaux */}
                 <h1 className="text-3xl font-extrabold text-gray-800 text-center">
@@ -149,7 +149,7 @@ const CarpoolingForm = () => {
                     </button>
                 </Form>
             </div>
-        </div>
+        </section>
     );
 };
 

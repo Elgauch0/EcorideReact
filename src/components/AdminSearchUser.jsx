@@ -48,7 +48,7 @@ const AdminSearchUser = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
+        <section className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
             <h2 className="text-xl font-semibold mb-4 text-gray-800">
                 🔍 Rechercher un utilisateur
             </h2>
@@ -131,7 +131,7 @@ const AdminSearchUser = () => {
                     )}
                 </div>
             )}
-        </div>
+        </section>
     );
 };
 

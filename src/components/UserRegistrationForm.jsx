@@ -41,7 +41,7 @@ const UserRegistrationForm = () => {
     const isSubmitting = state === 'submitting';
 
     return (
-        <>
+        <section>
             {response?.error && <h2
                 className="text-red-600 font-semibold mt-4 text-center"
                 role="alert"
@@ -111,7 +111,7 @@ const UserRegistrationForm = () => {
                 </button>
             </Form>
 
-        </>
+        </section>
     );
 };
 

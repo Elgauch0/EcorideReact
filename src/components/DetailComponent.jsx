@@ -77,7 +77,7 @@ export default function DetailComponent() {
     })
 
     return (
-        <div className="max-w-2xl mx-auto my-12 p-6 bg-white rounded-lg shadow-lg">
+        <section className="max-w-2xl mx-auto my-12 p-6 bg-white rounded-lg shadow-lg">
             {/* Bouton retour */}
             <button
                 onClick={() => navigate(-1)}
@@ -150,6 +150,6 @@ export default function DetailComponent() {
                     {isDisabled ? "reservation en cours..." : "reserver"}
                 </button>
             </Form>
-        </div>
+        </section>
     )
 }
