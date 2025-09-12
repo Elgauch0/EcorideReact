@@ -8,6 +8,7 @@ export default function Itinerary({ itinerary }) {
 
 
 
+
     const dateStr = new Date(datetime).toLocaleString('fr-FR', {
         weekday: 'short',
         day: 'numeric',

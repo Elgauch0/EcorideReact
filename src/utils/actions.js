@@ -135,8 +135,8 @@ export async function reserveItinerary(
     });
 
     if (!response.ok) {
-      console.log(response);
-      return { error: true, message: "response not OK" };
+      const data = await response.json();
+      return { error: true, message: data.message };
     }
     return {
       error: false,

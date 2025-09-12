@@ -4,7 +4,9 @@ import {
     useLoaderData,
     useNavigate,
     redirect,
-    useNavigation
+    useNavigation,
+    useLocation,
+    Navigate
 
 } from 'react-router';
 import { getItinerariesDataFromSessionStorage } from '../utils/loaders';
@@ -14,14 +16,15 @@ import { reserveItinerary } from '../utils/actions';
 
 
 export async function loader() {
-    const { error, message, list, itinerary } =
+    const { error, message, itinerary } =
         getItinerariesDataFromSessionStorage()
+
 
     if (error) {
         return redirect(message)
     }
 
-    return { list, itinerary }
+    return { itinerary }
 }
 
 
@@ -30,7 +33,7 @@ export async function action({ request }) {
     if (error) {
         return redirect(
             `/connexion?error=${encodeURIComponent(
-                "Vous devez être connecté pour réserver ce trajet"
+                "Vous devez être connecté pour réserver "
             )}`
         );
     }
@@ -52,14 +55,15 @@ export async function action({ request }) {
 
 export default function DetailComponent() {
     const navigate = useNavigate()
-    const { list, itinerary } = useLoaderData();
+    const { itinerary } = useLoaderData();
     const { state } = useNavigation();
     const isDisabled = state === "submitting";
+    const trip = useLocation().state || {};
+    if (!trip) {
+        return <Navigate to="/covoiturage" replace />;
+    }
 
 
-
-    // On prend le premier élément du tableau list
-    const trip = list[0]
     const { id, datetime, price, places, duration, vehicule } = trip
     const { departureCity, arrivalCity } = itinerary
 
@@ -86,17 +90,7 @@ export default function DetailComponent() {
             <h1 className="text-3xl font-bold text-center mb-8">
                 {departureCity} → {arrivalCity}
             </h1>
-            {/* Feedback après submit
-            {actionData && (
-                <div className={`p-4 mb-6 rounded ${actionData.error
-                        ? "bg-red-100 text-red-800"
-                        : "bg-green-100 text-green-800"
-                    }`}>
-                    {actionData.message}
-                </div>
-            )} */}
 
-            {/* Détails du trajet */}
             <div className="space-y-4 text-gray-700">
 
                 <p>
