@@ -165,3 +165,36 @@ export const checkAuthorization = (url) => {
 
   return { error: false, userID, token };
 };
+
+export const validatePassword = (mdp, cmpd) => {
+  if (mdp !== cmpd || mdp.length < 8)
+    return {
+      error: true,
+      message:
+        "Veuillez saisir deux mots de passe identiques, avec au moins 8 caractères",
+    };
+
+  const MAJ = "ABCDEFGHIJQLMNOPQRSTUVWXYZ";
+  const SPECIALS = `!@#$%^&*()-_=+[]{}|;:'",.<>?/\\\``;
+  const Numbers = "0123456789";
+
+  const testMaj = checkInArray(mdp, MAJ);
+  const testSpecial = checkInArray(mdp, SPECIALS);
+  const testNumbers = checkInArray(mdp, Numbers);
+  if (testMaj && testSpecial && testNumbers) {
+    return { error: false, message: "Succes" };
+  }
+  return {
+    error: true,
+    message:
+      "Votre mot de passe doit contenir au moins une majuscule, un chiffre et un caractère spécial",
+  };
+};
+function checkInArray(mdp, checkArray) {
+  for (let i = 0; i < mdp.length; i++) {
+    if (checkArray.includes(mdp[i])) {
+      return true;
+    }
+  }
+  return false;
+}

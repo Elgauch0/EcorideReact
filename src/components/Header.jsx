@@ -175,7 +175,7 @@ const Header = () => {
                             )}
                         </nav>
 
-                        {/* Bouton hamburger amélioré */}
+
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className={`lg:hidden p-2 rounded-xl transition-all duration-300 ${isScrolled

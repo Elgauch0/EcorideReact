@@ -1,18 +1,22 @@
 import { Form, redirect, useActionData, useNavigation } from "react-router";
-import { cleanSimpleText } from "../utils/functions";
+import { cleanSimpleText, validatePassword } from "../utils/functions";
 import { createUser } from "../utils/actions";
 
 
 export async function action({ request }) {
-
-
     const formData = await request.formData();
     const email = cleanSimpleText(formData.get("email"));
-    const plainPassword = cleanSimpleText(formData.get("plainPassword"));
+    const plainPassword = formData.get("plainPassword");
+    const confirmationPassword = formData.get('plainPassword2');
     const firstName = cleanSimpleText(formData.get("firstName"));
     const lastName = cleanSimpleText(formData.get("lastName"));
     const adress = cleanSimpleText(formData.get("adress"));
 
+
+    const passwdCheck = validatePassword(plainPassword, confirmationPassword);
+    if (passwdCheck.error) {
+        return { error: true, message: passwdCheck.message };
+    }
 
     const requestBody = {
         email,
@@ -21,9 +25,10 @@ export async function action({ request }) {
         lastName,
         adress
     };
-    if (!email || !plainPassword || !firstName || !lastName || !adress) {
+    if (!plainPassword || !firstName || !lastName || !adress) {
         return { error: true, message: "champs invalides" };
     }
+
     const res = await createUser(requestBody);
     if (res.error) {
         return res;
@@ -68,6 +73,15 @@ const UserRegistrationForm = () => {
                         type="password"
                         name="plainPassword"
                         id="plainPassword"
+                        className="w-full p-2 border border-gray-300 rounded"
+                    />
+                </div>
+                <div>
+                    <label htmlFor="plainPassword2" className="block mb-1 font-medium">Confirmation de  votre mot de passe :</label>
+                    <input
+                        type="password"
+                        name="plainPassword2"
+                        id="plainPassword2"
                         className="w-full p-2 border border-gray-300 rounded"
                     />
                 </div>
