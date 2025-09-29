@@ -77,7 +77,7 @@ const UserRegistrationForm = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="plainPassword2" className="block mb-1 font-medium">Confirmer votre Mdp :</label>
+                    <label htmlFor="plainPassword2" className="block mb-1 font-medium">Confirmation de  votre mot de passe :</label>
                     <input
                         type="password"
                         name="plainPassword2"
